@@ -1,0 +1,56 @@
+Title: Responsive Banking UI with Deposit/Withdrawal Buttons and Balance Display
+
+Objective:
+The aim of this task is to design a clean, professional, and mobile-friendly banking user interface using only HTML and CSS. This project helps in learning how to create structured layouts and style them properly, without using JavaScript or adding interactivity.
+
+
+HTML Code Explanation:
+The HTML file defines the structure of the web page:
+
+1. <!DOCTYPE html> and <html> tags define the document as a web page and the language used.
+2. Inside the <head> section:
+   - <meta charset="UTF-8"> sets character encoding.
+   - <meta name="viewport"...> ensures responsiveness on different devices.
+   - <title> sets the page title.
+   - <link rel="stylesheet"...> connects the HTML to the external CSS file (style.css).
+
+3. The <body> contains a <div> with class "card", which acts like a white box or card placed in the center.
+4. Inside the card:
+   - <div class="balance">$0</div> displays the balance in dollars.
+   - Two <button> elements with class names "deposit" and "withdraw" represent the green Deposit and red Withdraw buttons.
+
+This is a static layout—no button functionality is added, as the task only requires HTML and CSS.
+
+
+CSS Code Explanation:
+The CSS (Cascading Style Sheets) file styles and aligns the content:
+
+1. The * selector resets default margins and sets the font for the page.
+
+2. The body is styled to:
+   - Fill the whole screen height.
+   - Center the content both vertically and horizontally using Flexbox.
+   - Have a light grey background.
+
+3. The .card class styles the main container:
+   - White background, padding, rounded corners, and a soft shadow for a "card" effect.
+   - Max-width ensures it doesn't stretch too wide on large screens.
+   - Text is center-aligned.
+
+4. The .balance class:
+   - Makes the balance display large and green.
+
+5. The .btn class:
+   - Makes buttons full-width with padding, rounded edges, white text, and a pointer cursor on hover.
+   - .deposit (green) and .withdraw (red) use different background colors for clarity.
+
+6. A media query ensures mobile responsiveness:
+   - When screen width is below 480px, it slightly reduces padding and font size so everything fits nicely on smaller screens.
+
+
+Summary:
+This project demonstrates how to build a visually appealing, responsive banking UI using only HTML and CSS. The layout is centered, clean, and adjusts well across all device sizes—desktop, tablet, and mobile. While it currently shows static content, it lays the foundation for adding interactivity (like JavaScript) in the future.
+
+Instructions to View:
+1. Open the "index.html" file in any browser.
+2. Ensure "style.css" is in the same folder so that styling is applied properly.
