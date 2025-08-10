@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+Declares the document type as HTML5 so the browser uses standard mode.
+
+<html lang="en">
+Starts the HTML document and sets the page language to English (helps search engines & screen readers).
+
+<head>
+Begins the head section (meta information, title, links to CSS).
+
+<meta charset="UTF-8">
+Sets character encoding to UTF-8 so characters display correctly.
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+Makes the page responsive by telling the browser to match the device width and set zoom to 100%.
+
+<title>Admin Dashboard</title>
+The page title shown in the browser tab.
+
+`` (blank line)
+Visual separation — no effect on output.
+
+<!-- Link to External CSS -->
+A comment explaining the next line. Comments help humans, not the browser.
+
+<link rel="stylesheet" href="style.css">
+Loads the external CSS file style.css which contains all the styles.
+
+</head>
+Closes the head section.
+
+<body class="light">
+Starts the body (visible page). Adds class light by default so CSS applies the light theme initially.
+
+<!-- Main Container -->
+Comment to label the main grid container.
+
+<div class="container">
+Wrapping element that becomes the CSS Grid container for header, sidebar, main, footer.
+
+`` (blank line)
+
+<!-- Header -->
+Comment marking the header section.
+
+<header>
+Semantic header element — holds the top bar content (title and theme switch).
+
+<div class="title">Admin Dashboard</div>
+A div showing the dashboard title; class title could be used for styling.
+
+<div class="theme-switch">
+Wrapper for the toggle switch — useful for layout and styling.
+
+<label>
+Label element for the checkbox; clicking the text toggles the checkbox.
+
+<input type="checkbox" id="theme-toggle"> Dark Mode
+The actual checkbox control with id="theme-toggle" (used by JavaScript). The text Dark Mode appears next to it.
+
+</label>
+Closes the label.
+
+</div>
+Closes the theme-switch div.
+
+</header>
+Closes the header.
+
+`` (blank line)
+
+<!-- Sidebar Navigation -->
+Comment for the sidebar.
+
+<nav>
+Semantic navigation area for links.
+
+<ul>
+Unordered list to hold navigation items.
+
+<li><a href="#">Home</a></li>
+List item with a link. href="#" is a placeholder — replace with real URLs later.
+
+<li><a href="#">Users</a></li>
+Second nav item.
+
+<li><a href="#">Settings</a></li>
+Third nav item.
+
+</ul>
+Close the list.
+
+</nav>
+Close the nav.
+
+`` (blank line)
+
+<!-- Main Content -->
+Comment for the main content area.
+
+<main>
+Semantic main section — where the primary content goes (charts, tables, etc.).
+
+<h2>Welcome, Admin!</h2>
+Heading inside the main area.
+
+<p>This is the main content area. Add charts, tables, or reports here.</p>
+Placeholder paragraph.
+
+</main>
+Close main.
+
+`` (blank line)
+
+<!-- Footer -->
+Comment for the footer.
+
+<footer>
+Semantic footer area.
+
+&copy; 2025 Admin Panel
+Copyright symbol (&copy;) and year.
+
+</footer>
+Close footer.
+
+</div>
+Close the grid container .container.
+
+`` (blank line)
+
+<!-- Theme Switch Script -->
+Comment marking the JS block that handles the theme toggle.
+
+<script>
+Starts an inline JavaScript block.
+
+const themeToggle = document.getElementById('theme-toggle');
+Finds the checkbox by ID and stores it in the themeToggle variable.
+
+const body = document.body;
+Stores reference to the <body> element in body so we can change its classes.
+
+`` (blank line)
+
+themeToggle.addEventListener('change', () => {
+Adds an event listener that fires when the checkbox changes state (checked/unchecked).
+
+body.classList.toggle('dark', themeToggle.checked);
+Adds the dark class to <body> if the checkbox is checked; removes it if unchecked. The second argument is a boolean (so toggle acts as set/unset).
+
+body.classList.toggle('light', !themeToggle.checked);
+Ensures the light class is present when the checkbox is NOT checked (keeps classes explicit).
+
+});
+Closes the event listener function.
+
+</script>
+Closes the script block.
+
+</body>
+Closes the body.
+
+</html>
+Closes the HTML document.
+
+style.css — line-by-line explanation
+/* -------- General Layout -------- */
+Comment section header in CSS to organize rules.
+
+body {
+Start the body style block.
+
+margin: 0;
+Removes default browser margin so the layout hugs the viewport.
+
+font-family: Arial, sans-serif;
+Sets a clean, readable default font.
+
+}
+End body block.
+
+`` (blank line)
+
+/* Grid container for the layout */
+Comment describing the .container block.
+
+.container {
+Start style for the grid wrapper used in HTML.
+
+display: grid;
+Turns .container into a CSS Grid layout — the core of the page layout.
+
+grid-template-rows: 60px 1fr 40px;
+Defines three row sizes: header (60px), content (flexible 1fr), footer (40px).
+
+grid-template-columns: 200px 1fr;
+Two columns: sidebar fixed at 200px and main content flexible.
+
+grid-template-areas:
+Begins naming the grid areas — makes placement semantic and readable.
+
+"header header"
+Row 1: header spans both columns.
+
+"sidebar main"
+Row 2: sidebar left, main content right.
+
+"footer footer";
+Row 3: footer spans both columns.
+
+height: 100vh;
+Makes the container fill the full viewport height (so footer sticks to bottom of screen).
+
+}
+End .container block.
+
+`` (blank line)
+
+/* -------- Header -------- */
+Comment for header styles.
+
+header {
+Start header styles.
+
+grid-area: header;
+Places this element into the header grid area defined earlier.
+
+display: flex;
+Uses flexbox inside the header to easily position title and switch horizontally.
+
+justify-content: space-between;
+Pushes title to the left and switch to the right.
+
+align-items: center;
+Vertically centers the header content.
+
+padding: 0 20px;
+Adds left/right padding.
+
+font-weight: bold;
+Makes the header text bold.
+
+}
+End header block.
+
+`` (blank line)
+
+/* -------- Sidebar -------- */
+Comment for nav/sidebar styles.
+
+nav {
+Start nav styles.
+
+grid-area: sidebar;
+Places nav into the sidebar grid area.
+
+padding: 20px;
+Adds internal spacing.
+
+}
+End nav block.
+
+`` (blank line)
+
+/* Remove list styling for sidebar */
+Comment for list-reset rules.
+
+nav ul {
+Start styles for the nav list.
+
+list-style: none;
+Removes default bullets.
+
+padding: 0;
+Removes default padding so layout is even.
+
+}
+End nav ul block.
+
+`` (blank line)
+
+nav li {
+Start styles for list items.
+
+margin-bottom: 10px;
+Adds spacing between links.
+
+}
+End nav li block.
+
+`` (blank line)
+
+/* -------- Main Content -------- */
+Comment for main content.
+
+main {
+Start main styles.
+
+grid-area: main;
+Places this element into the main grid area.
+
+padding: 20px;
+Adds internal padding for content.
+
+}
+End main block.
+
+`` (blank line)
+
+/* -------- Footer -------- */
+Comment for footer.
+
+footer {
+Start footer block.
+
+grid-area: footer;
+Places footer into the footer grid area.
+
+text-align: center;
+Centers footer text.
+
+padding: 10px;
+Adds a bit of vertical padding.
+
+font-size: 14px;
+Sets a slightly smaller font size for the footer.
+
+}
+End footer.
+
+`` (blank line)
+
+/* -------- Light Theme -------- */
+Comment indicating light theme section.
+
+body.light {
+Targets <body> when it has the class light.
+
+background-color: #ffffff;
+White page background.
+
+color: #000;
+Black default text color.
+
+}
+End block.
+
+`` (blank line)
+
+body.light header,
+
+body.light footer {
+These two lines together target the header and footer when body has class light.
+
+background-color: #4CAF50;
+Green background for header/footer in light mode.
+
+color: white;
+White text on the green background for contrast.
+
+}
+End block.
+
+`` (blank line)
+
+body.light nav {
+Targets the sidebar in light mode.
+
+background-color: #f0f0f0;
+Light gray sidebar to visually separate it from main content.
+
+}
+End block.
+
+`` (blank line)
+
+body.light a {
+Targets links in light mode.
+
+color: purple;
+Purple links for visual accent (contrast with background).
+
+}
+End link style.
+
+`` (blank line)
+
+/* -------- Dark Theme -------- */
+Comment for dark theme rules.
+
+body.dark {
+Targets <body> when it has the class dark.
+
+background-color: #121212;
+Dark background color for page.
+
+color: white;
+Default text becomes white for readability.
+
+}
+End block.
+
+`` (blank line)
+
+body.dark header,
+
+body.dark footer {
+Targets header & footer in dark mode.
+
+background-color: #333;
+Dark gray header/footer to match the dark theme.
+
+color: white;
+Keep text white for contrast.
+
+}
+End block.
+
+`` (blank line)
+
+body.dark nav {
+Sidebar style in dark mode.
+
+background-color: #2c2c2c;
+Slightly lighter dark gray for the sidebar.
+
+}
+End block.
+
+`` (blank line)
+
+body.dark a {
+Link color in dark mode.
+
+color: #89CFF0;
+Light blue links that stand out on the dark background.
+
+}
+End CSS file.
+
+Quick notes 
