@@ -1,0 +1,109 @@
+Project Title
+
+Interactive SVG Drawing Tool
+
+Overview
+
+This project is a simple interactive tool built using HTML, CSS, and JavaScript that allows users to draw shapes on an SVG canvas.
+Users can choose a shape (circle, rectangle, or line) from a dropdown menu and draw it on the canvas by clicking (and dragging, in the case of rectangles and lines).
+
+Files
+
+index.html
+
+Contains the structure of the webpage.
+
+Includes the toolbar with shape selection and an empty SVG canvas where shapes will be drawn.
+
+Links to style.css for styling and script.js for interactivity.
+
+style.css
+
+Adds styling to the page.
+
+Centers the drawing tool on the screen.
+
+Styles the toolbar (shape selector) and the drawing area.
+
+Adds a border around the SVG canvas for better visibility.
+
+script.js
+
+Handles user interactions for drawing shapes.
+
+Detects which shape is selected (circle, rectangle, or line).
+
+Circle: Created on a single click.
+
+Rectangle / Line: Created by clicking and dragging.
+
+Updates shape properties dynamically as the user drags the mouse.
+
+Finalizes the shape when the mouse is released.
+
+How It Works
+
+Open index.html in a browser.
+
+Select a shape from the dropdown (Circle, Rectangle, Line).
+
+Click on the canvas:
+
+Circle → Click once to draw a small circle.
+
+Rectangle / Line → Click and hold, then drag to draw. Release to complete the shape.
+
+Features
+
+User-friendly interface.
+
+Supports multiple shape types.
+
+Smooth drawing with drag-and-drop.
+
+Organized into separate files for easy maintenance.
+This project is about creating an interactive drawing tool using HTML, CSS, and JavaScript where the user can draw shapes inside an SVG area by using their mouse. The purpose of this tool is to understand JavaScript DOM manipulation, SVG element creation, and event handling. The tool makes use of mouse events such as mousedown, mousemove, and mouseup to create and modify shapes in real time. Users can draw multiple shapes by repeating the process, and everything is handled dynamically without refreshing the page.
+
+Code Explanation
+
+The project is divided into three files:
+
+index.html → This file creates the structure of the page. It includes an SVG area that acts as the drawing canvas. The SVG has a defined width and height and serves as the main region where shapes are drawn. It also links the external CSS and JavaScript files.
+
+style.css → This file styles the page. The body has a background color and centers the content. The SVG area has a light border and a white background, making it look like a canvas where drawings can be made.
+
+script.js → This file contains the logic for drawing shapes. It uses three main mouse events:
+
+mousedown → Triggered when the user presses the mouse button. At this point, a new rectangle is created inside the SVG, and its starting position (startX, startY) is stored.
+
+mousemove → While the mouse is moving with the button pressed, the size of the rectangle is updated. The width and height are calculated dynamically based on the difference between the current mouse position and the starting position.
+
+mouseup → When the user releases the mouse button, the drawing action stops, and the rectangle remains on the canvas. The variable drawing is set to false, which prevents unwanted changes.
+
+The rectangle is given a transparent blue fill and a dark blue border so that it looks like a drawn shape on the canvas. Each time the user clicks and drags, a new shape is created, allowing multiple drawings on the same canvas.
+
+Some Code Explanation in Detail
+
+Creating SVG Element:
+
+rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+
+
+Here, createElementNS is used because SVG elements belong to a different XML namespace. This ensures that the rectangle is correctly created inside the SVG.
+
+Updating Rectangle Size:
+
+rect.setAttribute("x", Math.min(startX, currentX));
+rect.setAttribute("y", Math.min(startY, currentY));
+rect.setAttribute("width", Math.abs(currentX - startX));
+rect.setAttribute("height", Math.abs(currentY - startY));
+
+
+These lines calculate the top-left corner and size of the rectangle dynamically, even if the user drags in different directions. Using Math.min and Math.abs ensures the rectangle appears correctly regardless of drag direction.
+
+Event Handling:
+The mousedown, mousemove, and mouseup events work together to simulate real drawing. This method is commonly used in applications like paint tools and design editors.
+
+Final Result
+
+When the webpage runs, the user can click inside the SVG canvas, drag the mouse, and see a rectangle being drawn in real time. By repeating this action, multiple shapes can be created. The tool demonstrates how JavaScript and SVG can work together for interactive graphics.

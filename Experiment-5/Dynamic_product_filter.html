@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dynamic Product Filter with Dropdown using JavaScript DOM Manipulation</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="panel" aria-labelledby="title">
+      <h1 id="title">Product List</h1>
+
+      <!-- Filter control -->
+      <div class="controls">
+        <label for="categorySelect">Filter by Category:</label>
+        <select id="categorySelect" aria-label="Filter products by category">
+          <!-- Populated by JavaScript -->
+        </select>
+      </div>
+
+      <!-- Product elements -->
+      <ul id="productList" class="product-list" aria-live="polite">
+        <li class="product-card" data-category="Clothing">T-Shirt</li>
+        <li class="product-card" data-category="Clothing">Jeans</li>
+        <li class="product-card" data-category="Electronics">Headphones</li>
+        <li class="product-card" data-category="Electronics">Smartphone</li>
+        <li class="product-card" data-category="Books">Novel</li>
+        <li class="product-card" data-category="Books">Cookbook</li>
+      </ul>
+
+      <p id="noResult" class="no-result">No products found for this category.</p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,235 @@
+<link rel="stylesheet" href="style.css" />
+Loads the CSS rules that make everything look like the screenshot.
+
+Wrapper elements
+
+<div class="container"> centers the content and sets a max width.
+
+<div class="panel"> draws the bordered white card.
+
+Title
+
+<h1 id="title">Product List</h1> is just the section heading.
+
+Filter controls
+
+<div class="controls">
+  <label for="categorySelect">Filter by Category:</label>
+  <select id="categorySelect" aria-label="Filter products by category">
+    <!-- Populated by JavaScript -->
+  </select>
+</div>
+
+
+The label is linked to the select via for="categorySelect" + matching id.
+
+The select starts empty. JavaScript fills it with options: All, Clothing, Electronics, Books, etc.
+
+Product list
+
+<ul id="productList" class="product-list" aria-live="polite">
+  <li class="product-card" data-category="Clothing">T-Shirt</li>
+  <li class="product-card" data-category="Clothing">Jeans</li>
+  <li class="product-card" data-category="Electronics">Headphones</li>
+  <li class="product-card" data-category="Electronics">Smartphone</li>
+  <li class="product-card" data-category="Books">Novel</li>
+  <li class="product-card" data-category="Books">Cookbook</li>
+</ul>
+
+
+Each product is an <li> with a data-category attribute (e.g., data-category="Books").
+JavaScript reads this attribute to decide whether to show or hide each item.
+
+aria-live="polite" lets screen readers announce list changes without reloading the page.
+
+No result message
+
+<p id="noResult" class="no-result">No products found for this category.</p>
+
+
+Hidden by default; shown only when filtering results in zero visible items.
+
+Script include
+
+<script src="script.js"></script>
+
+
+Loads the JavaScript that builds the dropdown and performs the filtering.
+
+2) style.css — presentation (how it looks)
+
+CSS variables (:root)
+
+:root{
+  --card-border:#222;
+  --muted:#777;
+  --light:#f7f7f7;
+  --item-border:#ececec;
+}
+
+
+Centralized colors so it’s easy to tweak the theme.
+
+Base styles
+
+body sets the font, page background, margins, and text color.
+
+.container centers the layout with a max width.
+
+Panel
+
+.panel{
+  border: 2px solid var(--card-border);
+  background: white;
+  padding: 20px 22px;
+  border-radius: 3px;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.02);
+}
+
+
+Produces the framed card that matches your expected output.
+
+Controls row
+
+.controls uses flexbox to put the label and dropdown on one line.
+
+select receives padding, a border, and a readable font size.
+
+Products
+
+.product-list removes default bullets and spacing.
+
+.product-card draws each pill-shaped product row (padding, soft border, light background).
+
+.no-result is gray, italic, and display: none initially.
+
+Responsive tweak
+
+@media (max-width:520px){
+  .controls { flex-direction: column; align-items:flex-start; gap:6px; }
+  .controls label { min-width: auto; }
+}
+
+
+On small screens, the label and dropdown stack vertically.
+
+3) script.js — behavior (how it updates)
+
+Everything runs after the DOM is ready:
+
+document.addEventListener('DOMContentLoaded', () => {
+  // ...all logic inside...
+});
+
+a) Grab references to elements
+const select = document.getElementById('categorySelect');
+const productList = document.getElementById('productList');
+const products = Array.from(productList.querySelectorAll('.product-card'));
+const noResult = document.getElementById('noResult');
+
+
+Collects the dropdown, the <ul>, all product <li> nodes, and the “no result” paragraph.
+
+b) Build the list of unique categories automatically
+const categorySet = new Set(products.map(p => p.dataset.category || 'Uncategorized'));
+const categories = Array.from(categorySet).sort((a,b) => a.localeCompare(b));
+
+
+Reads each product’s data-category via the dataset API.
+
+Set removes duplicates (e.g., “Clothing” appears only once).
+
+Sorted alphabetically for a neat dropdown.
+
+c) Populate the dropdown
+select.innerHTML = '<option value="All">All</option>' +
+  categories.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
+
+
+Adds a default All option.
+
+Adds one <option> per category found in the list.
+
+Uses escapeHtml to avoid accidental HTML injection if category text ever contains special characters.
+
+function escapeHtml(s){
+  return String(s)
+    .replaceAll('"', '&quot;')
+    .replaceAll('<','&lt;')
+    .replaceAll('>','&gt;');
+}
+
+d) Core filtering function
+function filterProducts() {
+  const chosen = select.value; // "All", "Clothing", "Books", ...
+  let visibleCount = 0;
+
+  products.forEach(p => {
+    const cat = p.dataset.category || '';
+    const show = (chosen === 'All') || (cat === chosen);
+    p.style.display = show ? 'block' : 'none';
+    if (show) visibleCount++;
+  });
+
+  noResult.style.display = visibleCount === 0 ? 'block' : 'none';
+}
+
+
+Reads the selected category.
+
+For every product:
+
+If All or the product’s data-category exactly matches the selection, show it (display: block).
+
+Otherwise hide it (display: none).
+
+If nothing is visible, show the “No products found” message.
+
+Why inline style.display?
+It’s the simplest way to toggle visibility without adding/removing elements. (You could also toggle a CSS class like .hidden { display:none; }—both are valid.)
+
+e) Hook the filter to the dropdown and render once
+select.addEventListener('change', filterProducts);
+filterProducts(); // initial render shows all products
+
+
+When the user changes the dropdown, the list updates instantly (no reload).
+
+On page load, we call it once so the UI starts in a clean state.
+
+What happens when you pick “Books” (example flow)
+
+You change the dropdown to Books → triggers the change event.
+
+filterProducts() runs:
+
+chosen becomes "Books".
+
+Each product checks its data-category:
+
+Clothing? Hide.
+
+Electronics? Hide.
+
+Books? Show.
+
+Only “Novel” and “Cookbook” remain visible.
+
+If no items matched, the “No products found” message would appear.
+
+Runtime note: Each filter is O(n) over the number of products, which is perfectly fine for lists of common size.
+
+How to extend or customize
+
+Add new products
+Just append another <li class="product-card" data-category="SomeCat">Name</li> inside #productList. On page load, its category is auto-detected and added to the dropdown.
+
+Case-insensitive categories
+Change the equality check to compare lowercase strings:
+
+const show = chosen === 'All' || cat.toLowerCase() === chosen.toLowerCase();
+
+
+Use a CSS class instead of inline display
+
+.hidden { display: none; }
