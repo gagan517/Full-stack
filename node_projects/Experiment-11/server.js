@@ -6,6 +6,13 @@ const PORT = 3000;
 // Middleware to parse JSON request body
 app.use(express.json());
 
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  next();
+});
+
+
+
 // In-memory array to store cards
 let cards = [];
 let nextId = 1;
